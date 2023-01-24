@@ -1,5 +1,6 @@
 use clap::{arg, crate_version, Command};
 
+/// Create the [command](clap::Command) object which will handle all of the command line arguments. 
 pub fn make_cli() -> Command {
     Command::new("tockloader")
         .about("This is a sample description.")
@@ -9,8 +10,11 @@ pub fn make_cli() -> Command {
         .args([
             arg!(--debug "Print additional debugging information").action(clap::ArgAction::SetTrue)
         ])
+    // Note: arg_require_else_help will trigger the help command if no argument/subcommand is given.
+    // This means that the --debug flag will not trigger the help menu, even if alone it does nothing.
 }
 
+/// Generate all of the [subcommands](clap::Command) used by the program.
 fn get_subcommands() -> Vec<Command> {
     vec![Command::new("listen")
         .about("Open a terminal to receive UART data")
@@ -19,6 +23,7 @@ fn get_subcommands() -> Vec<Command> {
         .arg_required_else_help(true)]
 }
 
+/// Generate all of the [arguments](clap::Arg) that are required by subcommands which work with apps.
 fn get_app_args() -> Vec<clap::Arg> {
     vec![
         arg!(-a --"app-address" <ADDRESS> "Address where apps are located"),
@@ -27,8 +32,11 @@ fn get_app_args() -> Vec<clap::Arg> {
         arg!(--"bundle-apps" "Concatenate apps and flash all together, re-flashing apps as needed")
             .action(clap::ArgAction::SetTrue),
     ]
+    // Note: the .action(clap::ArgAction::SetTrue) doesn't seem to be necessary, though in clap documentation it is used.
 }
 
+/// Generate all of the [arguments](clap::Arg) that are required by subcommands which work
+/// with channels and computer-board communication.
 fn get_channel_args() -> Vec<clap::Arg> {
     vec![
         arg!(-p --port "The serial port or device name to use"),
@@ -53,6 +61,7 @@ fn get_channel_args() -> Vec<clap::Arg> {
         // These may not work out of the box
         arg!(--"openocd-options" <OPTIONS> "Tockloader-specific flags to direct how Tockloader uses OpenOCD"),
         arg!(--"openocd-commands" <CMDS> "Directly specify which OpenOCD commands to use for \"program\", \"read\", or \"erase\" actions"),
+        // -----
         arg!(--"flash-file" "Operate on a binary flash file instead of a proper board")
             .action(clap::ArgAction::SetTrue),
         arg!(--board <BOARD> "Explicitly specify the board that is being targeted"),
