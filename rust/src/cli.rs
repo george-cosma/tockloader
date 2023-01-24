@@ -42,10 +42,6 @@ fn get_channel_args() -> Vec<clap::Arg> {
         arg!(-p --port "The serial port or device name to use"),
         arg!(--serial "Use the serial bootloader to flash")
             .action(clap::ArgAction::SetTrue),
-        // Should we include depracated functionality?
-        // Other deprecated arguments are not included here, just this one.
-        /* arg!(--jtag "Use JTAG and JLinkExe to flash. Deprecated. Use --jlink instead")
-            .action(clap::ArgAction::SetTrue), */
         arg!(--jlink "Use JLinkExe to flash")
             .action(clap::ArgAction::SetTrue),
         arg!(--openocd "Use OpenOCD to flash")
