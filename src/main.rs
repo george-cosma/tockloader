@@ -25,3 +25,21 @@ fn main() {
         }
     }
 }
+
+fn increment(number: usize) -> usize {
+    number + 1
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+    
+    #[test]
+    fn increment_test() {
+        assert_eq!(increment(1) , 3);
+    }
+    #[test]
+    fn increment_test2() {
+        assert_eq!(increment(2) , 3);
+    }
+}
