@@ -2,9 +2,7 @@ name: Rust Build & Test
 
 on:
   push:
-    branches: [ "rust-port" ]
   pull_request:
-    branches: [ "rust-port" ]
 
 env:
   CARGO_TERM_COLOR: always
